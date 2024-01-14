@@ -1,0 +1,20 @@
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  security:
+    user:
+      name: admin
+      password: admin
+
+segmidToken: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3MDUyMzY4NDQsIm5iZiI6MTcwNTIzNjg0NCwianRpIjoiMmVlY2Q0YjgtOTJlMy00MTY3LTllMWYtNTIxMGZiYThkMTY2IiwiZXhwIjoxNzA1MzIzMjQ0LCJpZGVudGl0eSI6InNocnV0aGlyZWRkeTE3MjlAZ21haWwuY29tIiwiZnJlc2giOmZhbHNlLCJ0eXBlIjoiYWNjZXNzIn0.ICgBLt0gT4j-SQ1hgdhJbtwOxzILm9iUbCPzY18LOU1mGPRYvdKROoOJrx6XADUE7-hwyFpV04vgTCTm4QN5Dh5fe_Fm4zOg7wceOxLKp68FVIXmAVFMWO8fSrKJOw6QG2ZSQ9jVd1QdQmOoUYYfKUM9tLbbjwDAHbjk08T7IWbqHpIrMdzEWGobLSsKnys4rloW08m7gnAEfIcezrcaA6glR7NH2fqc6OsmalUgXucgSL_7zfhohS21Z4IDPSg2JmVA0X1p-UUd5ac1iDF-5H826vd7S5-LxH-HsHV7PgqP9qjwb8ih-KZQNEft5BSetungpX7k-MO6XH5XbTsNrvhAy4uIaG_IOiz3A1FCuCyfiwZELJn7PeU5emPlGccs2oCzf2xTJoItoFko4hjRtlUozPBAIADayVPJkqkuJB8mRRP3e1A02qRr4dL1xzYcZsQINHqVhPLNRcSjkhs5TOWz6UrTSTExzONac9w8Mg0U5zC5cNM8LBip0kXfgZRybjseZ1wPPQ8miVbb_qCoHVENK0PKvI0hzFU1F0P8iAJTTmePzBwIVFRz2ImIE_JIY0QUVuQAnaptosehljIH922qhv1iPxbUqyu9CZWhmp4pWIYHPhu2jy5E9tuFAwdQN8gUaijutwmyKvpmOPxY53lRb9EJ4T2BC0B_FlAv2TI'
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+    com:
+      google:
+        firebase: DEBUG
+
