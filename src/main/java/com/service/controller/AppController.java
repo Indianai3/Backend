@@ -20,7 +20,7 @@ public class AppController {
 
     @GetMapping(path = "/test")
     public String test(Principal principal) {
-        return principal.getName();
+        return "Hello world";
     }
 
     @PostMapping("/authenticate")
