@@ -3,8 +3,11 @@ package com.service.dao;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
+import com.service.utils.exception.BackendException;
 import com.service.utils.GenericUtils;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,6 +15,7 @@ import java.util.concurrent.ExecutionException;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class FirebaseDao {
 
     private final Firestore firestore;
@@ -21,9 +25,11 @@ public class FirebaseDao {
     }
 
     public String saveDocument(String collectionName, String documentId, Object data) {
+        log.info("Saving document with id: {}, in collection: {}", documentId, collectionName);
         CollectionReference collectionReference = firestore.collection(collectionName);
         DocumentReference documentReference = collectionReference.document(documentId);
         documentReference.set(data);
+        log.info("Successfully saved document with id: {}, in collection: {}", documentId, collectionName);
         return documentId;
     }
 
@@ -32,6 +38,7 @@ public class FirebaseDao {
         return saveDocument(collectionName, documentId, data);
     }
 
+    @SneakyThrows
     public <T> T getDocument(String collectionName, String documentId, Class<T> clazz) {
         CollectionReference collectionReference = firestore.collection(collectionName);
         DocumentReference documentReference = collectionReference.document(documentId);
@@ -40,11 +47,15 @@ public class FirebaseDao {
             DocumentSnapshot documentSnapshot = future.get();
             if (documentSnapshot.exists()) {
                 return documentSnapshot.toObject(clazz);
+            } else {
+                throw new BackendException(String.format("document with id: %s not found", documentId), 404);
             }
         } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace(); // Handle exceptions appropriately in a real application
+            e.printStackTrace();
+            throw new BackendException(e);
+        } catch (BackendException e) {
+            throw new BackendException(e);
         }
-        return null;
     }
 
     public <T> List<T> getAllDocuments(String collectionName, Class<T> clazz) {

@@ -1,13 +1,14 @@
-package com.service.configuration.security;
+package com.service.config.security;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseToken;
+import com.service.utils.Constants;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequestWrapper;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
@@ -15,11 +16,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Objects;
+import java.util.*;
 
 @Component
 @Slf4j
-//@Order(Ordered.HIGHEST_PRECEDENCE)
+@Order(Ordered.HIGHEST_PRECEDENCE)
 public class FirebaseTokenFilter extends OncePerRequestFilter {
 
     @Override
@@ -33,8 +34,16 @@ public class FirebaseTokenFilter extends OncePerRequestFilter {
         if(Objects.nonNull(token)) {
             try {
                 FirebaseToken firebaseToken = FirebaseAuth.getInstance().verifyIdToken(token);
-                request.setAttribute("Firebase-UID", firebaseToken.getUid());
-                filterChain.doFilter(request, response);
+                HttpServletRequestWrapper wrappedRequest = new HttpServletRequestWrapper(request) {
+                    @Override
+                    public Enumeration<String> getHeaders(String name) {
+                        if (Constants.FIREBASE_UID.equalsIgnoreCase(name)) {
+                            return Collections.enumeration(Collections.singletonList(firebaseToken.getUid()));
+                        }
+                        return super.getHeaders(name);
+                    }
+                };
+                filterChain.doFilter(wrappedRequest, response);
             } catch (Exception e) {
                 response.sendError(HttpStatus.UNAUTHORIZED.value(), "Invalid token");
             }

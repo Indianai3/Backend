@@ -42,7 +42,7 @@ dependencies {
 }
 
 application {
-	mainClass = 'com.service.SpringStarter1Application'
+	mainClass = 'com.service.ApplicationMain'
 }
 
 tasks.named('bootBuildImage') {
