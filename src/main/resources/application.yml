@@ -7,12 +7,12 @@ segmidToken: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3MDYzNjIxNT
 
 logging:
   level:
-    org:
-      springframework:
-        security: DEBUG
+    root: info
     com:
       google:
-        firebase: DEBUG
+        firebase: info
+  file:
+    name: ../logs/springApp.log
 
 firebase:
   StorageBucketUrl: 'projectai-4361d.appspot.com'
