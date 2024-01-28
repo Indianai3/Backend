@@ -19,4 +19,5 @@ public class Constants {
     public static final String IMAGES = "Images";
     public static final String ARCHIVES = "Archives";
     public static final String PRODUCTS = "Products";
+    public static final String SEGMID_TOKEN_STORE = "SegmidTokenStore";
 }

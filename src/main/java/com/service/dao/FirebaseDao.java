@@ -8,8 +8,11 @@ import com.service.utils.GenericUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -18,11 +21,7 @@ import java.util.concurrent.ExecutionException;
 @Slf4j
 public class FirebaseDao {
 
-    private final Firestore firestore;
-
-    public FirebaseDao() {
-        this.firestore = FirestoreClient.getFirestore();
-    }
+    private final Firestore firestore = FirestoreClient.getFirestore();
 
     public String saveDocument(String collectionName, String documentId, Object data) {
         log.info("Saving document with id: {}, in collection: {}", documentId, collectionName);
@@ -50,10 +49,7 @@ public class FirebaseDao {
             } else {
                 throw new BackendException(String.format("document with id: %s not found", documentId), 404);
             }
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-            throw new BackendException(e);
-        } catch (BackendException e) {
+        } catch (InterruptedException | ExecutionException | BackendException e) {
             throw new BackendException(e);
         }
     }
@@ -80,5 +76,25 @@ public class FirebaseDao {
         CollectionReference collectionReference = firestore.collection(collectionName);
         DocumentReference documentReference = collectionReference.document(documentId);
         documentReference.delete();
+    }
+
+    public <T> List<Pair<DocumentReference, T>> getDocuments(String collectionName, Class<T> documentType) {
+        CollectionReference collectionReference = firestore.collection(collectionName);
+
+        List<Pair<DocumentReference, T>> result = new ArrayList<>();
+
+        try {
+            ApiFuture<QuerySnapshot> querySnapshot = collectionReference.get();
+
+            for (DocumentSnapshot document : querySnapshot.get().getDocuments()) {
+                DocumentReference documentReference = document.getReference();
+                T documentData = document.toObject(documentType);
+                result.add(new ImmutablePair<>(documentReference, documentData));
+            }
+        } catch (InterruptedException | ExecutionException e) {
+            log.error("encountered error while getting data from {}", collectionName);
+        }
+
+        return result;
     }
 }

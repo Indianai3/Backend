@@ -1,13 +1,13 @@
 package com.service.service.ai;
 
-import com.service.client.ai.SegmidFeignClient;
 import com.service.dao.FirebaseDao;
 import com.service.model.entity.Image;
 import com.service.model.request.GeneratorRequest;
 import com.service.model.request.SegmidRequest;
+import com.service.service.ImageUploaderService;
+import com.service.service.segmid.SegmidService;
 import com.service.utils.Constants;
 import com.service.utils.GenericUtils;
-import com.service.service.ImageUploaderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,12 +22,10 @@ import java.util.Random;
 @RequiredArgsConstructor
 @Slf4j
 public class SegmidImageGenerator implements ImageGenerator {
-    private final SegmidFeignClient segmidFeignClient;
+    private final SegmidService segmidService;
     private final ImageUploaderService imageUploaderService;
     private final FirebaseDao firebaseDao;
     private final Random random = new Random();
-    @Value("${segmidToken}")
-    private String token;
 
     @Value("${firebase.StorageBucketUrl}")
     private String fbStorageBucketUrl;
@@ -36,8 +34,7 @@ public class SegmidImageGenerator implements ImageGenerator {
     public Image generateImage(String fbUid, GeneratorRequest generatorRequest) {
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
-        byte[] ImageBytes = segmidFeignClient.generateByModel(getToken(), getModel(generatorRequest),
-                getSegMidRequest(generatorRequest));
+        byte[] ImageBytes = segmidService.generateByModel(getModel(generatorRequest), getSegMidRequest(generatorRequest));
         stopWatch.stop();
         log.info("Time taken for segmid request is: {}", stopWatch.getTotalTimeSeconds());
 
@@ -81,8 +78,4 @@ public class SegmidImageGenerator implements ImageGenerator {
         return segmidRequest;
     }
 
-    private String getToken() {
-        // todo: implement token algo
-        return token;
-    }
 }
