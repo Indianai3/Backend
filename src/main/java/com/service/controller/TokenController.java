@@ -12,6 +12,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/token")
+@CrossOrigin
 public class TokenController {
     private final SegmidTokenManager segmidTokenManager;
     @PostMapping("/add-tokens")

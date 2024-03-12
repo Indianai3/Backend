@@ -12,6 +12,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/product")
+@CrossOrigin
 public class ProductController {
     private final ProductService productService;
     @GetMapping("/{productId}")
