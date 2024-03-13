@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/access")
+@RequestMapping("/auth")
 @CrossOrigin
 @RequiredArgsConstructor
 public class AuthController {
