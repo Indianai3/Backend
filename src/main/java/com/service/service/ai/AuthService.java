@@ -5,7 +5,10 @@ import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
 import com.google.firebase.auth.UserRecord;
 import com.service.client.auth.FBFeignClient;
+import com.service.model.ModelMapper;
+import com.service.model.request.FbAuthRefreshRequest;
 import com.service.model.request.FbAuthRequest;
+import com.service.model.response.FbAuthRefreshResponse;
 import com.service.model.response.FbAuthResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -46,7 +49,9 @@ public class AuthService {
         return signIn(fbAuthRequest);
     }
 
-    public String getIdTokenFromRefreshToken(String refreshToken) {
-        return null;
+    public FbAuthResponse refreshToken(FbAuthRefreshRequest fbAuthRefreshRequest) {
+        log.info("Trying to refresh token for refreshTokenId: {}", fbAuthRefreshRequest.getRefresh_token());
+        FbAuthRefreshResponse fbAuthRefreshResponse = fbFeignClient.getTokenUsingRefreshId(fbAuthKey, fbAuthRefreshRequest);
+        return ModelMapper.mapToFbAuthResponse(fbAuthRefreshResponse);
     }
 }

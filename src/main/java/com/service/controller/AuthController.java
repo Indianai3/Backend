@@ -1,5 +1,6 @@
 package com.service.controller;
 
+import com.service.model.request.FbAuthRefreshRequest;
 import com.service.model.request.FbAuthRequest;
 import com.service.model.response.FbAuthResponse;
 import com.google.firebase.auth.FirebaseAuthException;
@@ -32,12 +33,10 @@ public class AuthController {
         return authService.signUp(fbAuthRequest);
     }
 
-    //todo: implement get id token using refresh token
-//    @PostMapping("/token")
-//    public String getIdTokenFromRefreshToken(@RequestBody String refreshToken) throws FirebaseAuthException {
-//        // todo: error handling
-//        return authService.getIdTokenFromRefreshToken(refreshToken);
-//    }
+    @PostMapping("/refreshToken")
+    public FbAuthResponse refreshToken(@RequestBody FbAuthRefreshRequest fbAuthRefreshRequest) {
+        return authService.refreshToken(fbAuthRefreshRequest);
+    }
 
     @PostMapping("/userId")
     public String getUserId(@RequestBody String token) throws FirebaseAuthException {
