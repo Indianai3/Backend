@@ -39,10 +39,9 @@ public class SegmidImageGenerator implements ImageGenerator {
         log.info("Time taken for segmid request is: {}", stopWatch.getTotalTimeSeconds());
 
         String storagePath = String.format("%s/%s.png", Constants.AI_IMAGE_FOLDER, GenericUtils.getUuid());
-        String imageUrl = "https://storage.googleapis.com/" + fbStorageBucketUrl + "/" + storagePath;
 
 //        CompletableFuture.runAsync(() -> imageUploaderService.uploadImageToFirebaseStorageAndGetUrl(storagePath, ImageBytes));
-        imageUploaderService.uploadImageToFirebaseStorageAndGetUrl(storagePath, ImageBytes);
+        String imageUrl = imageUploaderService.uploadImageToFirebaseStorageAndGetUrl(storagePath, ImageBytes);
 
         Image image = new Image();
         image.setImageUrl(imageUrl);
