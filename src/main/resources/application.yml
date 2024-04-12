@@ -20,10 +20,10 @@ firebase:
 segmid:
   url: 'https://api.segmind.com'
 
-#server:
-#  port: 8443
-#  ssl:
-#    key-store: classpath:keystore.p12
-#    key-store-password: geeksforgeeks
-#    keyStoreType: PKCS12
-#    keyAlias: tomcat
+server:
+  port: 8443
+  ssl:
+    key-store: classpath:keystore.p12
+    key-store-password: geeksforgeeks
+    keyStoreType: PKCS12
+    keyAlias: tomcat
