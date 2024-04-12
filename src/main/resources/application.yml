@@ -24,7 +24,6 @@ server:
   port: 8443
   ssl:
     key-store: classpath:keystore.p12
-    key-store-password: projectx
-    key-password: projectx
+    key-store-password: geeksforgeeks
     keyStoreType: PKCS12
-    keyAlias: mydomain
+    keyAlias: tomcat
