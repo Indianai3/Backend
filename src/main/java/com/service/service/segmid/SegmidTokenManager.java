@@ -30,7 +30,7 @@ public class SegmidTokenManager {
     private void initStoreTokens() {
         log.info("Initialising store tokens");
         storeTokens.clear();
-//        storeTokens.addAll(firebaseDao.getDocuments(Constants.SEGMID_TOKEN_STORE, SegmidToken.class));
+        storeTokens.addAll(firebaseDao.getDocuments(Constants.SEGMID_TOKEN_STORE, SegmidToken.class));
         log.info("Successfully initialised store tokens");
     }
 
