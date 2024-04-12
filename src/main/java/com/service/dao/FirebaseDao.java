@@ -3,6 +3,7 @@ package com.service.dao;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
+import com.service.exception.ResourceNotFoundException;
 import com.service.utils.exception.BackendException;
 import com.service.utils.GenericUtils;
 import lombok.RequiredArgsConstructor;
@@ -47,9 +48,9 @@ public class FirebaseDao {
             if (documentSnapshot.exists()) {
                 return documentSnapshot.toObject(clazz);
             } else {
-                throw new BackendException(String.format("document with id: %s not found", documentId), 404);
+                throw new ResourceNotFoundException(String.format("document with id: %s not found", documentId));
             }
-        } catch (InterruptedException | ExecutionException | BackendException e) {
+        } catch (InterruptedException | ExecutionException e) {
             throw new BackendException(e);
         }
     }

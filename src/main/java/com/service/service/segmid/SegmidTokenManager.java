@@ -5,7 +5,9 @@ import com.service.dao.FirebaseDao;
 import com.service.model.entity.SegmidToken;
 import com.service.utils.Constants;
 import com.service.utils.GenericUtils;
+import com.service.utils.exception.BackendException;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.stereotype.Service;
@@ -28,13 +30,15 @@ public class SegmidTokenManager {
     private void initStoreTokens() {
         log.info("Initialising store tokens");
         storeTokens.clear();
-        storeTokens.addAll(firebaseDao.getDocuments(Constants.SEGMID_TOKEN_STORE, SegmidToken.class));
+//        storeTokens.addAll(firebaseDao.getDocuments(Constants.SEGMID_TOKEN_STORE, SegmidToken.class));
         log.info("Successfully initialised store tokens");
     }
 
+    @SneakyThrows
     public Pair<DocumentReference, SegmidToken> getToken() {
         if (storeTokens.isEmpty()) {
-            throw new IllegalArgumentException("StoreTokens is null or empty");
+            log.info("StoreTokens is null or empty");
+            throw new BackendException("We are currently facing heavy load, please wait while we cook your Tshirt");
         }
         return storeTokens.get(ThreadLocalRandom.current().nextInt(storeTokens.size()));
     }
