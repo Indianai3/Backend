@@ -2,10 +2,10 @@ package com.service.service.segmid;
 
 import com.google.cloud.firestore.DocumentReference;
 import com.service.dao.FirebaseDao;
+import com.service.exception.TooManyRequestsException;
 import com.service.model.entity.SegmidToken;
 import com.service.utils.Constants;
 import com.service.utils.GenericUtils;
-import com.service.utils.exception.BackendException;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -38,7 +38,7 @@ public class SegmidTokenManager {
     public Pair<DocumentReference, SegmidToken> getToken() {
         if (storeTokens.isEmpty()) {
             log.info("StoreTokens is null or empty");
-            throw new BackendException("We are currently facing heavy load, please wait while we cook your Tshirt");
+            throw new TooManyRequestsException("We are currently facing heavy load, please wait while we cook your Tshirt");
         }
         return storeTokens.get(ThreadLocalRandom.current().nextInt(storeTokens.size()));
     }

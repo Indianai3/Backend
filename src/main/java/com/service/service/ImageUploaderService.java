@@ -5,7 +5,6 @@ import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Bucket;
 import com.google.firebase.cloud.StorageClient;
 import com.service.utils.GenericUtils;
-import com.service.utils.exception.BackendException;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Component;
@@ -36,7 +35,7 @@ public class ImageUploaderService {
 
             return getPublicUrl(blobInfo, token);
         } catch (Exception e) {
-            throw new BackendException(e);
+            throw new Exception(String.format("Error while persisting image: %s", e.getMessage()));
         }
     }
 

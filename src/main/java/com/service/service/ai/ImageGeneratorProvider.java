@@ -1,6 +1,6 @@
 package com.service.service.ai;
 
-import com.service.utils.exception.BackendException;
+import com.service.exception.ResourceNotFoundException;
 import com.service.model.ImageGeneratorType;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class ImageGeneratorProvider {
             return typeToImageGeneratorMap.get(ImageGeneratorType.SEGMID);
         }
         else if (!typeToImageGeneratorMap.containsKey(type)) {
-            throw new BackendException(String.format("ImageGeneratorType: %s not found", type.name()), 404);
+            throw new ResourceNotFoundException(String.format("ImageGeneratorType: %s not found", type.name()));
         }
         return typeToImageGeneratorMap.get(type);
     }

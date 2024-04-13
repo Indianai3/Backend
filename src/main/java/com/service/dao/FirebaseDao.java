@@ -4,7 +4,6 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 import com.service.exception.ResourceNotFoundException;
-import com.service.utils.exception.BackendException;
 import com.service.utils.GenericUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -51,7 +50,7 @@ public class FirebaseDao {
                 throw new ResourceNotFoundException(String.format("document with id: %s not found", documentId));
             }
         } catch (InterruptedException | ExecutionException e) {
-            throw new BackendException(e);
+            throw new Exception(e);
         }
     }
 

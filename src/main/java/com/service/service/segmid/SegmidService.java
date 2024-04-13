@@ -2,9 +2,9 @@ package com.service.service.segmid;
 
 import com.google.cloud.firestore.DocumentReference;
 import com.service.client.ai.SegmidFeignClient;
+import com.service.exception.TooManyRequestsException;
 import com.service.model.entity.SegmidToken;
 import com.service.model.request.SegmidRequest;
-import com.service.utils.exception.BackendException;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.apache.commons.lang3.tuple.Pair;
@@ -34,11 +34,11 @@ public class SegmidService {
                 if(e.getMessage().contains("Unathorised") || e.getMessage().contains("401")) {
                     segmidTokenManager.removeTokenFromStore(token);
                 } else {
-                    throw new BackendException(e.getMessage());
+                    throw new Exception(e.getMessage());
                 }
             }
         }
 
-        throw new BackendException("Unable to process request due to heavy load");
+        throw new TooManyRequestsException("Unable to process request due to heavy load");
     }
 }
