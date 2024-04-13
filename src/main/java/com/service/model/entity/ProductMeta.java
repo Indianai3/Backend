@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ProductMeta {
     private Size size;
-    private Gender gender;
+    private String gender;
 }
