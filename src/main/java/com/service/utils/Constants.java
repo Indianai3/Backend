@@ -20,5 +20,6 @@ public class Constants {
     public static final String ARCHIVES = "Archives";
     public static final String PRODUCTS = "Products";
     public static final String USERS = "Users";
+    public static final String COLLECTIONS = "Collections";
     public static final String SEGMID_TOKEN_STORE = "SegmidTokenStore";
 }

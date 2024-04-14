@@ -30,6 +30,7 @@ dependencies {
 
 	implementation 'com.google.firebase:firebase-admin:9.2.0'
 	implementation 'javax.servlet:javax.servlet-api:4.0.1'
+	implementation 'com.stripe:stripe-java:4.2.0'
 
 	compileOnly 'org.projectlombok:lombok:1.18.30'
 

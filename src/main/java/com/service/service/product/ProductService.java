@@ -1,4 +1,4 @@
-package com.service.service;
+package com.service.service.product;
 
 import com.service.dao.FirebaseDao;
 import com.service.model.entity.Product;
@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.service.utils.Constants.PRODUCTS;
-
 
 @Service
 @Slf4j
@@ -26,9 +25,17 @@ public class ProductService {
         return product;
     }
 
+    public Product getProduct(String productId) {
+        return getProduct(null, productId);
+    }
+
     public List<Product> getListOfProducts(String fbUid, List<String> productIds) {
         return productIds.stream()
                 .map(productId -> getProduct(fbUid, productId))
                 .collect(Collectors.toList());
+    }
+
+    public Product addProduct(String fbUid, Product product) {
+        return null;
     }
 }

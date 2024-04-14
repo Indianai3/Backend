@@ -5,7 +5,7 @@ import com.service.exception.ResourceNotFoundException;
 import com.service.model.entity.DetailedProduct;
 import com.service.model.entity.Product;
 import com.service.model.entity.UserSession;
-import com.service.service.ProductService;
+import com.service.service.product.ProductService;
 import com.service.utils.Constants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

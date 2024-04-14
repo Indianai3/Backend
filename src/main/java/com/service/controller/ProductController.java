@@ -1,7 +1,7 @@
 package com.service.controller;
 
 import com.service.model.entity.Product;
-import com.service.service.ProductService;
+import com.service.service.product.ProductService;
 import com.service.utils.Constants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -25,5 +25,11 @@ public class ProductController {
     public ResponseEntity<List<Product>> getListOfProducts(@RequestHeader(value = Constants.FIREBASE_UID, required = false) String fbUid,
                                                         @RequestBody List<String> productIds) {
         return ResponseEntity.ok(productService.getListOfProducts(fbUid, productIds));
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<Product> addProduct(@RequestHeader(value = Constants.FIREBASE_UID, required = false) String fbUid,
+                                                           @RequestBody Product product) {
+        return ResponseEntity.ok(productService.addProduct(fbUid, product));
     }
 }
