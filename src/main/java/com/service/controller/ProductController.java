@@ -32,4 +32,10 @@ public class ProductController {
                                                            @RequestBody Product product) {
         return ResponseEntity.ok(productService.addProduct(fbUid, product));
     }
+
+    @PutMapping("/update")
+    public ResponseEntity<Product> updateProduct(@RequestHeader(value = Constants.FIREBASE_UID, required = false) String fbUid,
+                                              @RequestBody Product product) {
+        return ResponseEntity.ok(productService.update(fbUid, product));
+    }
 }

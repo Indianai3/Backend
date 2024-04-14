@@ -38,4 +38,9 @@ public class ProductService {
     public Product addProduct(String fbUid, Product product) {
         return null;
     }
+
+    public Product update(String fbUid, Product product) {
+        firebaseDao.saveDocument(PRODUCTS, product.getProductId(), product);
+        return product;
+    }
 }
