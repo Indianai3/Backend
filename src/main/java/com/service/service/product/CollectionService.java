@@ -2,7 +2,7 @@ package com.service.service.product;
 
 import com.service.dao.FirebaseDao;
 import com.service.model.entity.Collection;
-import com.service.model.request.CollectionDTO;
+import com.service.model.response.CollectionDTO;
 import com.service.utils.Constants;
 import com.service.utils.GenericUtils;
 import lombok.Getter;
@@ -72,4 +72,7 @@ public class CollectionService {
         return collectionDto;
     }
 
+    public Collection getCollectionById(String collectionId) {
+        return firebaseDao.getDocument(Constants.COLLECTIONS, collectionId, Collection.class);
+    }
 }

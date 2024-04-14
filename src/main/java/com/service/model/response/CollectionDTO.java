@@ -1,4 +1,4 @@
-package com.service.model.request;
+package com.service.model.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.service.model.entity.Collection;

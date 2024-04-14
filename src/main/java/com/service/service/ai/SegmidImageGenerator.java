@@ -1,10 +1,9 @@
 package com.service.service.ai;
 
-import com.service.dao.FirebaseDao;
 import com.service.model.entity.Image;
 import com.service.model.request.GeneratorRequest;
 import com.service.model.request.SegmidRequest;
-import com.service.service.ImageUploaderService;
+import com.service.service.image.ImageService;
 import com.service.service.segmid.SegmidService;
 import com.service.utils.Constants;
 import com.service.utils.GenericUtils;
@@ -23,8 +22,7 @@ import java.util.Random;
 @Slf4j
 public class SegmidImageGenerator implements ImageGenerator {
     private final SegmidService segmidService;
-    private final ImageUploaderService imageUploaderService;
-    private final FirebaseDao firebaseDao;
+    private final ImageService imageService;
     private final Random random = new Random();
 
     @Value("${firebase.StorageBucketUrl}")
@@ -39,21 +37,8 @@ public class SegmidImageGenerator implements ImageGenerator {
         log.info("Time taken for segmid request is: {}", stopWatch.getTotalTimeSeconds());
 
         String storagePath = String.format("%s/%s.png", Constants.AI_IMAGE_FOLDER, GenericUtils.getUuid());
-
-//        CompletableFuture.runAsync(() -> imageUploaderService.uploadImageToFirebaseStorageAndGetUrl(storagePath, ImageBytes));
-        String imageUrl = imageUploaderService.uploadImageToFirebaseStorageAndGetUrl(storagePath, ImageBytes);
-
-        Image image = new Image();
-        image.setImageUrl(imageUrl);
-        image.setImageId(GenericUtils.getUuid());
-        image.setMetaData(getMetaData(generatorRequest));
-        image.setCreatedAt(System.currentTimeMillis());
-        image.setFbUid(fbUid);
-
-//        CompletableFuture.runAsync(() -> firebaseDao.saveDocument(Constants.IMAGES, image.getImageId(), image));
-        firebaseDao.saveDocument(Constants.IMAGES, image.getImageId(), image);
-
-        return image;
+        String imageUrl = imageService.uploadImageToFirebaseStorageAndGetUrl(storagePath, ImageBytes);
+        return imageService.saveImage(fbUid, imageUrl, getMetaData(generatorRequest));
     }
 
     private HashMap<String, Object> getMetaData(GeneratorRequest generatorRequest) {

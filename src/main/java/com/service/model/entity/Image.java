@@ -16,5 +16,6 @@ public class Image {
     private Long createdAt;
     @JsonIgnore
     private String fbUid;
+    @JsonIgnore
     private HashMap<String, Object> metaData;
 }

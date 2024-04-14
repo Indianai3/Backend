@@ -1,6 +1,7 @@
 package com.service.controller;
 
 import com.service.model.entity.Product;
+import com.service.model.request.ProductDTO;
 import com.service.service.product.ProductService;
 import com.service.utils.Constants;
 import lombok.RequiredArgsConstructor;
@@ -29,8 +30,8 @@ public class ProductController {
 
     @PostMapping("/add")
     public ResponseEntity<Product> addProduct(@RequestHeader(value = Constants.FIREBASE_UID, required = false) String fbUid,
-                                                           @RequestBody Product product) {
-        return ResponseEntity.ok(productService.addProduct(fbUid, product));
+                                                           @RequestBody ProductDTO productDTO) {
+        return ResponseEntity.ok(productService.addProduct(fbUid, productDTO));
     }
 
     @PutMapping("/update")
