@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class ProductMeta {
     private Size size;
     private String gender;
+    private String color;
 }

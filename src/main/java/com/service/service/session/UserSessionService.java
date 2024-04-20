@@ -2,9 +2,11 @@ package com.service.service.session;
 
 import com.service.dao.FirebaseDao;
 import com.service.exception.ResourceNotFoundException;
+import com.service.model.ModelMapper;
 import com.service.model.entity.DetailedProduct;
 import com.service.model.entity.Product;
 import com.service.model.entity.UserSession;
+import com.service.model.response.UserSessionDTO;
 import com.service.service.product.ProductService;
 import com.service.utils.Constants;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +25,8 @@ public class UserSessionService {
         return firebaseDao.getDocument(Constants.USERS, fbUid, UserSession.class);
     }
 
-    public UserSession updateUserSession(String fbUid, UserSession userSession) {
+    public UserSession updateUserSession(String fbUid, UserSessionDTO userSessionDTO) {
+        UserSession userSession = ModelMapper.mapUserSessionDtoToUserSession(userSessionDTO);
         firebaseDao.saveDocument(Constants.USERS, fbUid, userSession);
         return userSession;
     }
