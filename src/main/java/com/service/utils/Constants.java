@@ -22,4 +22,6 @@ public class Constants {
     public static final String USERS = "Users";
     public static final String COLLECTIONS = "Collections";
     public static final String SEGMID_TOKEN_STORE = "SegmidTokenStore";
+    public static final String ORDERS = "Orders";
+
 }

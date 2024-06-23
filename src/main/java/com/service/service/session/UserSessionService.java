@@ -12,6 +12,8 @@ import com.service.utils.Constants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Component
@@ -75,5 +77,16 @@ public class UserSessionService {
     private String getKey(String fbUid, DetailedProduct detailedProduct) {
         return String.format("%s__%s__%s", fbUid, detailedProduct.getProductId(),
                 detailedProduct.getProductMeta().getSize().name());
+    }
+
+    public UserSession addOrder(String fbUid, String orderId) {
+        UserSession userSession = getUserSession(fbUid);
+        List<String> orderIds = Objects.nonNull(userSession.getOrderIds())
+                ? userSession.getOrderIds()
+                : new ArrayList<>();
+        orderIds.add(orderId);
+        userSession.setOrderIds(orderIds);
+        firebaseDao.saveDocument(Constants.USERS, fbUid, userSession);
+        return userSession;
     }
 }

@@ -31,10 +31,14 @@ dependencies {
 	implementation 'com.google.firebase:firebase-admin:9.2.0'
 	implementation 'javax.servlet:javax.servlet-api:4.0.1'
 	implementation 'com.stripe:stripe-java:4.2.0'
+	implementation 'com.razorpay:razorpay-java:1.4.6'
+	implementation 'org.json:json:20220320'
+
+	implementation 'com.twilio.sdk:twilio:10.3.0'
 
 	compileOnly 'org.projectlombok:lombok:1.18.30'
 
-	compileOnly 'org.projectlombok:lombok:1.18.22'
+	compileOnly 'org.projectlombok:lombok:1.18.32'
 	annotationProcessor 'org.projectlombok:lombok:1.18.22'
 	testCompileOnly 'org.projectlombok:lombok:1.18.22'
 	testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'

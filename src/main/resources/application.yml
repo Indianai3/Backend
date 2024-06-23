@@ -27,3 +27,11 @@ server:
     key-store-password: geeksforgeeks
     keyStoreType: PKCS12
     keyAlias: tomcat
+
+razorpay:
+  rzp_key_id: rzp_test_1m8sXSJncKMAsd
+  rzp_key_secret: qUKNFqjIiWLVDP9UIYkBR4Ea
+  rzp_currency: INR
+  rzp_company_name: ProjectX
+  rzp_webhook_secret: "testingsecretcode"
+  validate_webhook: true

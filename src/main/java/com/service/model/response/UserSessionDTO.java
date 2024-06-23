@@ -2,6 +2,7 @@ package com.service.model.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.service.model.entity.DetailedProduct;
+import com.service.model.entity.Order;
 import com.service.model.entity.UserSession;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,7 @@ import java.util.Objects;
 public class UserSessionDTO {
     private Bucket favouriteEntries;
     private Bucket cartEntries;
+    private List<Order> orders;
 
     public UserSessionDTO(UserSession userSession) {
         if (Objects.nonNull(userSession)) {
